@@ -14,15 +14,17 @@ export const calculateChargingDetails = (startPercentage: number) => {
 
   // Constants
   const FULL_CHARGE = 100;
-  const PERCENTAGE_PER_HOUR = 10; // 10% per hour
-  const UNITS_PER_TEN_PERCENT = 1; // 1 unit per 10%
-  const COST_PER_UNIT = 10; // ₹10 per unit
+  const TOTAL_BATTERY_CAPACITY = 30; // 30 units (kWh) for full charge (0-100%)
+  const COST_PER_UNIT = 7; // ₹7 per unit
 
   // Calculations
   const remainingPercentage = FULL_CHARGE - startPercentage;
-  const hoursToFullCharge = remainingPercentage / PERCENTAGE_PER_HOUR;
-  const unitsRequired = (remainingPercentage / 10) * UNITS_PER_TEN_PERCENT;
+  const unitsRequired = (remainingPercentage / 100) * TOTAL_BATTERY_CAPACITY;
   const totalCost = unitsRequired * COST_PER_UNIT;
+  
+  // Estimate charging time (assuming 10% per hour charging rate)
+  const PERCENTAGE_PER_HOUR = 10; // 10% per hour
+  const hoursToFullCharge = remainingPercentage / PERCENTAGE_PER_HOUR;
 
   return {
     startPercentage,
