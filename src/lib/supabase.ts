@@ -12,11 +12,11 @@ export const fetchSessions = async (userId: string) => {
   const { data, error } = await supabase
     .from(TABLE_NAMES.SESSIONS)
     .select('*')
-    .eq('userId', userId)
+    .eq('userid', userId) // Note: column name is 'userid' (lowercase) in the database
     .order('date', { ascending: false });
     
   if (error) throw error;
-  return data;
+  return data || [];
 };
 
 export const fetchSessionsByMonth = async (userId: string, month: number, year: number) => {
@@ -27,19 +27,31 @@ export const fetchSessionsByMonth = async (userId: string, month: number, year: 
   const { data, error } = await supabase
     .from(TABLE_NAMES.SESSIONS)
     .select('*')
-    .eq('userId', userId)
+    .eq('userid', userId) // Note: column name is 'userid' (lowercase) in the database
     .gte('date', startDate)
     .lte('date', endDate)
     .order('date', { ascending: false });
     
   if (error) throw error;
-  return data;
+  return data || [];
 };
 
 export const saveSession = async (session: ChargingSession) => {
+  // Ensure data formatting matches database column names
+  const formattedSession = {
+    userid: session.userId, // Convert to lowercase to match database column
+    startpercentage: session.startPercentage,
+    endpercentage: session.endPercentage,
+    duration: session.duration,
+    unitsconsumed: session.unitsConsumed,
+    cost: session.cost,
+    date: session.date,
+    createdat: session.createdAt || new Date().toISOString()
+  };
+
   const { data, error } = await supabase
     .from(TABLE_NAMES.SESSIONS)
-    .insert([session]);
+    .insert([formattedSession]);
     
   if (error) throw error;
   return data;

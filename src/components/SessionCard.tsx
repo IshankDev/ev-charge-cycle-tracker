@@ -9,6 +9,9 @@ interface SessionCardProps {
 }
 
 const SessionCard = ({ session }: SessionCardProps) => {
+  // Make sure we have session.id defined for the key prop
+  const sessionId = session.id || '';
+  
   return (
     <Card className="card-hover">
       <CardContent className="p-4">

@@ -18,11 +18,25 @@ export const useSessions = (month?: number, year?: number) => {
     queryFn: async () => {
       if (!userId) return [];
       
+      let data;
       if (month !== undefined && year !== undefined) {
-        return fetchSessionsByMonth(userId, month, year);
+        data = await fetchSessionsByMonth(userId, month, year);
       } else {
-        return fetchSessions(userId);
+        data = await fetchSessions(userId);
       }
+      
+      // Map database column names to our frontend model
+      return data.map((item: any) => ({
+        id: item.id,
+        userId: item.userid,
+        startPercentage: item.startpercentage,
+        endPercentage: item.endpercentage,
+        duration: item.duration,
+        unitsConsumed: item.unitsconsumed,
+        cost: item.cost,
+        date: item.date,
+        createdAt: item.createdat
+      }));
     },
     enabled: !!userId,
   });
