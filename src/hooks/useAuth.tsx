@@ -1,6 +1,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { supabase, signIn, signUp, signOut, getCurrentUser, getSession } from '@/lib/supabase';
+import { signIn, signUp, signOut, getCurrentUser, getSession } from '@/lib/supabase';
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from '@/components/ui/use-toast';
 import { AuthState, User } from '@/types';
 

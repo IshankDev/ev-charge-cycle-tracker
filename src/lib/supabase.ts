@@ -1,6 +1,7 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { supabase } from "@/integrations/supabase/client";
+import { ChargingSession } from '@/types';
 
 export const TABLE_NAMES = {
   SESSIONS: 'charging_sessions'
@@ -35,7 +36,7 @@ export const fetchSessionsByMonth = async (userId: string, month: number, year: 
   return data;
 };
 
-export const saveSession = async (session: any) => {
+export const saveSession = async (session: ChargingSession) => {
   const { data, error } = await supabase
     .from(TABLE_NAMES.SESSIONS)
     .insert([session]);

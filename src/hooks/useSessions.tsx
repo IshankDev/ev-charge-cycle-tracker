@@ -33,7 +33,7 @@ export const useSessions = (month?: number, year?: number) => {
       const sessionWithUser = {
         ...newSession,
         userId,
-        date: newSession.date || new Date().toISOString(),
+        date: newSession.date || new Date().toISOString().split('T')[0],
         createdAt: new Date().toISOString()
       };
       return saveSession(sessionWithUser);
