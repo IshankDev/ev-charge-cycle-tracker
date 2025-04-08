@@ -1,4 +1,6 @@
 
+import { MonthlyReport } from "@/types";
+
 /**
  * Calculate charging details based on starting percentage
  * @param startPercentage - Starting battery percentage (0-100)

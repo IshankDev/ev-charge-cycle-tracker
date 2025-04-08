@@ -1,13 +1,6 @@
 
 import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-// Note: In a real app, these would come from environment variables
-// For Lovable + Supabase integration, these will be provided by the integration
-const supabaseUrl = 'SUPABASE_URL'; // Will be replaced by Supabase integration
-const supabaseAnonKey = 'SUPABASE_ANON_KEY'; // Will be replaced by Supabase integration
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+import { supabase } from "@/integrations/supabase/client";
 
 export const TABLE_NAMES = {
   SESSIONS: 'charging_sessions'
