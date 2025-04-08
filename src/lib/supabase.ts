@@ -3,14 +3,10 @@ import { createClient } from '@supabase/supabase-js';
 import { supabase } from "@/integrations/supabase/client";
 import { ChargingSession } from '@/types';
 
-export const TABLE_NAMES = {
-  SESSIONS: 'charging_sessions'
-};
-
 // Session management functions
 export const fetchSessions = async (userId: string) => {
   const { data, error } = await supabase
-    .from(TABLE_NAMES.SESSIONS)
+    .from('charging_sessions')
     .select('*')
     .eq('userid', userId) // Note: column name is 'userid' (lowercase) in the database
     .order('date', { ascending: false });
@@ -25,7 +21,7 @@ export const fetchSessionsByMonth = async (userId: string, month: number, year: 
   const endDate = new Date(year, month, 0).toISOString().split('T')[0];
   
   const { data, error } = await supabase
-    .from(TABLE_NAMES.SESSIONS)
+    .from('charging_sessions')
     .select('*')
     .eq('userid', userId) // Note: column name is 'userid' (lowercase) in the database
     .gte('date', startDate)
@@ -50,7 +46,7 @@ export const saveSession = async (session: ChargingSession) => {
   };
 
   const { data, error } = await supabase
-    .from(TABLE_NAMES.SESSIONS)
+    .from('charging_sessions')
     .insert([formattedSession]);
     
   if (error) throw error;
